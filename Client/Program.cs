@@ -61,7 +61,7 @@ class Program
 
                         // Display average temperature
                         Console.WriteLine();
-                        Console.WriteLine($"Average Temperature: {averageTemperature}°C");
+                        Console.WriteLine($"Average Temperature for {stationId}: {averageTemperature}°C");
                         Console.WriteLine();
 
                         // Display each observation data
@@ -81,7 +81,7 @@ class Program
                         }
 
                         Console.WriteLine();
-                        Console.WriteLine($"Average Temperature: {averageTemperature}°C");
+                        Console.WriteLine($"Average Temperature for {stationId}: {averageTemperature}°C");
                         Console.WriteLine();
                     }
                     else
