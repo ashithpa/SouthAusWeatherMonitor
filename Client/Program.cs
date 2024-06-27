@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Model;
 using System.Configuration;
-using Client;
+using Model;
+using Client; // Assuming this is your model namespace
 
 class Program
 {
@@ -11,31 +11,29 @@ class Program
     {
         // Build configuration
         string? baseUrl = ConfigurationManager.AppSettings["BaseUrl"];
+        string? defaultStationId = ConfigurationManager.AppSettings["DefaultStationId"];
+
         if (string.IsNullOrEmpty(baseUrl))
         {
             Console.WriteLine("Error: BaseUrl is not configured in appsettings.json.");
             return;
         }
 
-        string stationId = ""; // Initialize with an empty string
+        if (string.IsNullOrEmpty(defaultStationId))
+        {
+            Console.WriteLine("Error: DefaultStationId is not configured in appsettings.json.");
+            return;
+        }
+
+        string stationId = defaultStationId; // Initialize with DefaultStationId
+
         bool searchAgain = true;
 
         while (searchAgain)
         {
             try
             {
-                // Prompt user to enter station ID
-                Console.Write("Enter Station ID: ");
-                stationId = Console.ReadLine() ?? ""; // Read user input for station ID and trim any extra spaces
-
-                // Validate stationId input
-                if (string.IsNullOrEmpty(stationId))
-                {
-                    Console.WriteLine("Station ID cannot be null or empty.");
-                    continue; // Skip further processing if stationId is null or empty
-                }
-
-                // Construct the API endpoint URL with user-provided station ID
+                // Construct the API endpoint URL with the current station ID
                 string apiUrl = $"{baseUrl}/api/weather/{stationId}";
 
                 // Make a GET request to the API
@@ -55,14 +53,13 @@ class Program
                         observationDataList = JsonConvert.DeserializeObject<List<ObservationData>>(jsonResponse);
                     }
 
-
                     // Check if deserialization succeeded and list is not null
                     if (observationDataList != null && observationDataList.Count > 0)
                     {
                         // Calculate average temperature
                         double averageTemperature = ObservationDataUtility.CalculateAverageTemperature(observationDataList);
 
-                        // Display average temperature as a top-level statement
+                        // Display average temperature
                         Console.WriteLine();
                         Console.WriteLine($"Average Temperature: {averageTemperature}°C");
                         Console.WriteLine();
@@ -122,6 +119,19 @@ class Program
             {
                 searchAgain = false; // Exit the loop if user does not want to search again
             }
+            else
+            {
+                // Prompt user to enter a new station ID
+                Console.Write("Enter Station ID: ");
+                stationId = Console.ReadLine() ?? ""; // Read user input for station ID and trim any extra spaces
+
+                // Validate stationId input
+                if (string.IsNullOrEmpty(stationId))
+                {
+                    Console.WriteLine("Station ID cannot be null or empty.");
+                    searchAgain = false; // Exit if stationId is null or empty
+                }
+            }
 
             Console.WriteLine();
         }
@@ -129,5 +139,4 @@ class Program
         Console.WriteLine("Exiting program. Press any key to close...");
         Console.ReadKey();
     }
-
 }
