@@ -2,6 +2,10 @@ API (ASP.NET Core Web API):
 --------------------------------
 A RESTful HTTP service deployable on IIS that retrieves comprehensive weather observation data for any station in South Australia. The API includes fields such as Name, Weather, local_date_time, apparent_temperature, air_temperature, dew_point, and cloud, returning data in JSON format.
 
+Prerequisite - Please update the BaseURL (API URL) in the Client App.Config file: 
+<add key="BaseUrl" value="http://localhost:5083" />
+
+
 Output:
 The API outputs the average temperature along with a formatted list of all observations retrieved. 
 Note - Assuming air_temp is the property representing temperature
