@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using API.Services;
+using Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,8 @@ builder.Services.Configure<WeatherApiSettings>(builder.Configuration.GetSection(
 // Configure HTTP Client for WeatherService
 builder.Services.AddHttpClient<IWeatherService, WeatherService>(client =>
 {
-    client.BaseAddress = new Uri("http://www.bom.gov.au/fwo/IDS60901/");
+    var weatherApiSettings = builder.Configuration.GetSection("WeatherApiSettings").Get<WeatherApiSettings>();
+    client.BaseAddress = new Uri(weatherApiSettings.BaseUrl);
     client.DefaultRequestHeaders.Accept.Clear();
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });

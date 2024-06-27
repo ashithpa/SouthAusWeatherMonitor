@@ -74,10 +74,4 @@ namespace API.Services
         }
     }
 
-    public class WeatherApiSettings
-    {
-        public string BaseUrl { get; set; }
-        public int TimeoutInSeconds { get; set; } = 30; // Default timeout of 30 seconds
-    }
-
 }
