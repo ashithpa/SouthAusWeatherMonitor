@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Configuration;
 using Model;
-using Client; // Assuming this is your model namespace
+using Client; 
 
 class Program
 {
