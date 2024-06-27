@@ -1,0 +1,25 @@
+API (ASP.NET Core Web API):
+--------------------------------
+A RESTful HTTP service deployable on IIS that retrieves comprehensive weather observation data for any station in South Australia. The API includes fields such as Name, Weather, local_date_time, apparent_temperature, air_temperature, dew_point, and cloud, returning data in JSON format.
+
+Output:
+The API outputs the average temperature along with a formatted list of all observations retrieved. 
+Note - Assuming air_temp is the property representing temperature
+
+Components:
+WeatherController.cs:
+Defines routes and manages HTTP requests for weather data retrieval using the IWeatherService.
+
+IWeatherService.cs:
+Interface defining the GetWeatherObservationsAsync method for asynchronous weather data retrieval.
+
+WeatherService.cs:
+Implements IWeatherService, handling HTTP requests to external APIs, processing responses into ObservationData.
+
+Console Application:
+-------------------
+The console application interacts with the deployed API, prompts users for a stationID via console input, and displays the results.
+
+Shared Model:
+------------
+Contains classes ensuring consistency in data structures and logic across the API, console application, and potential testing scenarios.
